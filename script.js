@@ -15,7 +15,8 @@ window.addEventListener('load', function() {
             this.color = color;
             this.originX = x;
             this.originY = y;
-            this.size = this.effect.gap;
+            // this.size = this.effect.gap
+            this.size = this.effect.gap - 1;
             this.dx = 0;
             this.dy = 0;
             this.vx = 0;
