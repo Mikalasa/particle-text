@@ -59,7 +59,7 @@ window.addEventListener('load', function() {
             this.textX = this.canvasWidth / 2;
             this.textY = this.canvasHeight / 2;
             this.fontSize = 120;
-            this.lineHeight = this.fontSize * 0.9
+            this.lineHeight = this.fontSize * 1.1
             this.maxTextWidth = this.canvasWidth * 0.8;
             this.textInput = document.getElementById('textInput');
             this.verticalOffset = 0;
@@ -89,13 +89,13 @@ window.addEventListener('load', function() {
         wrapText(text) {
             const gradient = this.context.createLinearGradient(0, 0, this.canvasWidth, this.canvasHeight);
             gradient.addColorStop(0.3, 'red');
-            gradient.addColorStop(0.5, 'fuchsia');
-            gradient.addColorStop(0.7, 'purple');
+            gradient.addColorStop(0.5, 'magenta');
+            gradient.addColorStop(0.7, 'yellow');
             this.context.fillStyle = gradient;
             this.context.textAlign = 'center';
             this.context.textBaseline = 'middle';
             this.context.lineWidth = 3;
-            this.context.strokeStyle = 'white';
+            this.context.strokeStyle = 'orange';
             this.context.font= this.fontSize + 'px Helvetica';
 
             // Break multiline text
@@ -118,7 +118,7 @@ window.addEventListener('load', function() {
             this.textY = this.canvasHeight / 2 - textHeight / 2 + this.verticalOffset
             linesArray.forEach((el, index) => {
                 this.context.fillText(el, this.textX, this.textY + (index * this.lineHeight));
-                this.context.strokeText(el, this.textX, this.textY + (index * this.lineHeight));
+                // this.context.strokeText(el, this.textX, this.textY + (index * this.lineHeight));
             });
             this.convertToParticles()
         }
@@ -143,12 +143,18 @@ window.addEventListener('load', function() {
             }
 
         }
-
         render() {
             this.particles.forEach(particle => {
                 particle.draw();
                 particle.update();
             });
+        }
+        resize(width, height) {
+            this.canvasWidth = width;
+            this.canvasHeight = height;
+            this.textX = this.canvasWidth / 2;
+            this.textY = this.canvasHeight / 2;
+            this.maxTextWidth = this.canvasWidth * 0.8;
         }
     }
 
@@ -164,4 +170,11 @@ window.addEventListener('load', function() {
         console.log('animating');
     }
     animate()
+    window.addEventListener('resize', function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        effect.resize(canvas.width, canvas.height);
+        effect.wrapText(effect.textInput.value);
+        console.log('resize');
+    });
 })
